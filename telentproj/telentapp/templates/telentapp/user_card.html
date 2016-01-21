@@ -1,0 +1,7 @@
+<a href="{% url 'user_profile' object.username %}" style="display:inline-block"><div>
+    <img width="400" height="400" src="{{ object.profile.profile_image.image.url }}">
+    <div>
+        <span>{{ object }}</span>
+    </div>
+</div>
+</a>

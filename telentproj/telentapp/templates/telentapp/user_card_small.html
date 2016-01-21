@@ -1,0 +1,46 @@
+<div class="small-12 columns" {% if extra_style %}style="{{ extra_style }}"{% endif %}>
+    <div class="row">
+        <div class="shrink column">
+            <a href="{% url 'user_profile' object.username %}" style="display: block;">
+                <div style="position:relative;">
+                    {% include 'telentapp/user_profile_image_small.html' with object=object %}
+
+                </div>
+            </a>
+        </div>
+        <div class="column">
+            <div class="row">
+                <div class="column"><a href="{% url 'user_profile' object.username %}">{{ object }}</a></div>
+                <div class="column" style="text-align:right;">
+                <span
+                        style="text-align:right;">{% load timedelta %}
+                    {% if td|timedelta:"{weeks}"|add:"0" %}
+                        {{ td|timedelta:"{weeks}w" }}
+                        {{ td|timedelta:"{days_without_weeks}d" }}
+                    {% else %}
+                        {% if td|timedelta:"{days}"|add:"0" %}
+                            {{ td|timedelta:"{days}d" }}
+                        {% else %}
+                            {% if td|timedelta:"{hours}"|add:"0" %}{{ td|timedelta:"{hours}h" }}
+                                {% else %}{{ td|timedelta:"{minutes}m" }}
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}</span>
+                </div>
+            </div>
+            <div class="row">
+                {% if location %}
+                    <div class="column"><a>{{ location }}</a></div>
+                {% endif %}
+                {% if views %}
+                    <div class="column" style="text-align:right;">
+                        {% if full_image %}
+                            <span><a href="{{ full_image }}">Full image</a></span>
+                        {% endif %}
+                        <span>{{ views }} view{{ views|pluralize }}</span>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

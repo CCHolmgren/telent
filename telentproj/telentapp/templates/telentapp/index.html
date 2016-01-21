@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="row align-center" style="margin-top: 1%;">
+        {% for image in images %}
+
+            <div class="small-10 columns align-center">
+                {% include 'telentapp/images/list.html' with object=image %}
+            </div>
+            {% empty %}
+            <div>There are no images yet</div>
+        {% endfor %}
+        {% if is_paginated %}
+
+
+            <div class="pagination small-12 columns">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a href="/?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+                <span class="page-current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="/?page={{ page_obj.next_page_number }}">next</a>
+                {% endif %}
+            </span>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

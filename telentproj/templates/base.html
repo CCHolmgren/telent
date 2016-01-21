@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block head_title %}{% endblock %}</title>
+
+    {% load static from staticfiles %}
+
+    <link rel="stylesheet" href="{% static 'css/foundation.css' %}">
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/foundation/6.1.1/foundation.min.js"></script>
+
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    {% block extra_head %}
+    {% endblock %}
+
+</head>
+<body>
+{% block body %}
+    <div id="wrapper">
+    <div id="scotch-panel" class="make-me-a-panel">
+        <div class="menu-close-button right-close">
+            <a href="#" class="toggle-nav">
+            <span class="menu-burger-text">
+        </span>
+                <span class="burger-x"></span>
+            </a>
+        </div>
+        <ul class="menu-first">
+            <li class="name">
+                <a href="{% url 'home' %}">Home</a>
+            </li>
+            <li><a href="{% url 'latest_images' %}">Latest images</a></li>
+            <li><a href="{% url 'popular' %}">Popular</a></li>
+            {% load account %}
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'upload' %}">Upload</a></li>
+                <li><a href="{% url 'account_logout' %}">Log out</a></li>
+            {% else %}
+                <li><a href="{% url "account_login" %}">Log in</a></li>
+                <li><a href="{% url "account_signup" %}">Sign up</a></li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <nav class="top-bar" id="call-to-action">
+        <div class="top-bar-left">
+            <div class="menu-close-button left-close">
+                <a href="#" class="toggle-nav">
+                <span class="menu-burger-text">
+                    Menu
+                </span>
+                    <span class="burger-x transparent-when-scotch-is-showing"></span>
+                </a>
+            </div>
+            <ul class="menu" style="position: relative; left: 100px;">
+                <li class="menu-text"><a href="{% url 'home' %}">Telent</a></li>
+            </ul>
+        </div>
+
+        <div class="top-bar-right">
+            <div class="login-button">
+                {% if user.is_authenticated %}
+                    <div>
+                        <a href="{% url 'upload' %}" class="button" style="color: white; margin-bottom: 0;">Upload</a>
+                        <a href="{% url 'user_profile' username=user.username %}"
+                           style="color: black; position:relative; display: inline-block;">
+                            {% include 'telentapp/user_profile_image_small.html' with object=user %}
+                            <span>{{ user.username }}</span></a>
+                        <a href="{% url 'account_logout' %}" style="color: black; display: inline-block;">Log out</a>
+                    </div>
+                {% else %}
+                    <div style="margin-top: 10px">
+                        <a href="{% url 'account_login' %}">Log in</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+    {% if messages %}
+        <div class="callout">
+            <strong>Messages:</strong>
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+    <div class="row">
+        {% block content %}
+        {% endblock %}
+    </div>
+{% endblock %}
+</div>
+{% include 'footer.html' %}
+{% block extra_body %}
+{% endblock %}
+<script src="{% static 'js/scotchPanels.js' %}"></script>
+<script>
+    var panel = $('#scotch-panel').scotchPanel({
+        containerSelector: '#wrapper',
+        direction: 'left',
+        duration: 300,
+        transition: 'ease',
+        clickSelector: '.toggle-nav',
+        distanceX: '30%',
+        enableEscapeKey: true
+    });
+    $(".close-panel").click(function () {
+        panel.close();
+    });
+</script>
+</body>
+</html>

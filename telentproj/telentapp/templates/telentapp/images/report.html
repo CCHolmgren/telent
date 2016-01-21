@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+    <form method="post">
+    {% csrf_token %}
+        <div>Reporting an image by {{ image.user }}.</div>
+    {{ form }}
+    <input type="submit" value="Report this image" class="button">
+    </form>
+
+{% endblock %}

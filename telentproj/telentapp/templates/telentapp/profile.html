@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="small-12 columns row" style="outline: 1px solid black;; margin-top: 1%;">
+        <div class="small-12 columns row">
+            <div class="shrink column">
+                <div style="height: 200px; width: 200px; border-radius: 50%; overflow: hidden; position: relative;">
+                    <img src="{% if not user.ban %}{{ profile.profile_image.image.url }}{% endif %}" style="height: 200px; width: 200px;">
+                    <div style="position:absolute; top: 0; left: 0; right: 0; bottom: 0;"></div>
+                </div>
+            </div>
+            <div class="column" style="outline: 1px solid black;">
+            {% if not user.ban %}
+                <div><span>{{ object.username }}</span></div>
+                <div><span>Joined {{ object.date_joined|timesince }} ago</span></div>
+                {% if user == object %}
+                <div><a href="#" class="button">Edit your profile</a></div>
+                {% endif %}
+                {% else %}
+                {% if user == object %}
+                <div><h2>You are banned</h2></div>
+                    <div>Reason: {{ user.ban.reason }}</div>
+                    {% else %}
+                    <div><h2>This user is banned</h2></div>
+                    {% endif %}
+                <div></div>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+    {% if not user.ban %}
+    <h1>{{ object.username }} images</h1>
+    <div class="small-12 columns row" style="margin-top: 2%;">
+        <div class="large-up-2 row align-center">
+            {% for picture in object.images.all %}
+                <div class="large-6 columns" style="padding: 0;">
+                    {% include 'telentapp/images/list.html' with object=picture %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}

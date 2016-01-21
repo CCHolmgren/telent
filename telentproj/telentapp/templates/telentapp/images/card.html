@@ -1,0 +1,11 @@
+<div style="border: 1px solid grey; border-radius: 4px; padding: 5px;">
+    <div class="row">
+        {% include 'telentapp/user_card_small.html' with object=object.user td=object.created_at extra_style="margin: 10px 0;" %}
+    </div>
+    <div style="position:relative;">
+        <a href="{% url 'image' slug=object.slug %}">
+            <img src="{{ object.image.url }}">
+            <div style="position:absolute; top: 0; left: 0; right: 0; bottom: 0;"></div>
+        </a>
+    </div>
+</div>

@@ -1,0 +1,6 @@
+{% if object.profile and object.profile.profile_image %}
+    <img class="small-profile-picture" style="border:0;padding-top:0;"
+         src="{{ object.profile.profile_image.image.url }}">
+    <div style="position:absolute; top: 0; left: 0; right: 0; bottom: 0;"></div>{% else %}<span
+        class="small-profile-picture">{{ object.username|slice:":1"|upper }}</span>
+{% endif %}

@@ -1,0 +1,1 @@
+telentve\Scripts\Activate
